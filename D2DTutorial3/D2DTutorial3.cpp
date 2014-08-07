@@ -234,8 +234,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	int wmId, wmEvent;
-	PAINTSTRUCT ps;
-	HDC hdc;
 
 	switch (message)
 	{
