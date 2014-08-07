@@ -23,19 +23,8 @@ inline void SafeRelease(
 	}
 }
 
-void DrawMe(HWND hWnd) {
-	ID2D1Factory * pD2DFactory = NULL;
-	ID2D1HwndRenderTarget* pD2DHRT = NULL;
-
-	IWICImagingFactory* pWICImagingFactory = NULL;
-	IWICBitmapDecoder* pWICBitmapDecoder = NULL;
-	IWICFormatConverter* pWICFormatConverter = NULL;
-	IWICBitmapFrameDecode* pBitmapFrameDecode = NULL;
-
-	ID2D1Bitmap* pD2DBitmap = NULL;
-
-	HRESULT hr =
-		D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED,
+void Setup(HWND hWnd) {
+	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED,
 		&pD2DFactory);
 
 	RECT rc;
@@ -86,6 +75,11 @@ void DrawMe(HWND hWnd) {
 			);
 
 	}
+}
+
+void DrawMe(HWND hWnd) {
+
+	Setup(hWnd);
 
 	D2D_SIZE_F rtSize = pD2DBitmap->GetSize();
 
@@ -103,6 +97,10 @@ void DrawMe(HWND hWnd) {
 
 	hr = pD2DHRT->EndDraw();
 
+	ReleaseThemAll();
+}
+
+void ReleaseThemAll() {
 	SafeRelease(&pD2DBitmap);
 	SafeRelease(&pBitmapFrameDecode);
 	SafeRelease(&pWICFormatConverter);
@@ -110,8 +108,8 @@ void DrawMe(HWND hWnd) {
 	SafeRelease(&pWICImagingFactory);
 	SafeRelease(&pD2DHRT);
 	SafeRelease(&pD2DFactory);
-
 }
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
